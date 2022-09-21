@@ -3,7 +3,7 @@
 # 2) 'C:/Users/thepo/Pictures/Screenshots'
 # 3) vk_api.VkApi(token="vk1.a.........")
 
-
+#IMPORTING LIBS
 import vk_api
 from PIL.ExifTags import TAGS
 from PIL import Image
