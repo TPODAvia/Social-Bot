@@ -9,7 +9,7 @@ from random import randint
 
 
 #KATE MOBILE MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-session = vk_api.VkApi(token="vk1.a.O9TFQM6vudNuJx71PbfsspzlUV2OUPLdXcBVmpImkj4tYbXAVyv8c_aceNAfMJ4UlX_x29g5wUJ99utM76-H0p23nuP0SOl1pno5DGisVs_qkuhpr0P3JH2dE3nMNuyWH23SWOe2IvrCGav1LAlyaeXA5j9EI681Qm1sYsIYBOf7x2OYfn-SaP8BGX6JBWPs")
+session = vk_api.VkApi(token="vk1.a.O9TF.....JBWPs")
 vk = session.get_api()
 
 #GET UNREAD MODULE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
