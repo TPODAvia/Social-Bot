@@ -27,7 +27,7 @@ for line in lines:
 use_proverbs = proverbs[randint(0, count-1)]
 
 #KATE MOBILE MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-session = vk_api.VkApi(token="vk1.a.gU7O8Ha55oZ8isw5U5109KItRDNUFP-BOLjt91vx1_6WBf64tRf0vDesKRK9npFn1OoUvrmf0UpFgYEWDJ7bvOjz-2XQZxbnfjNNES69gyhkJD6uT9YXiA1q1vBl6lJo0MtE63NMtfo8QPz6IGFm62x-UyuCt8hudxxJ8bGfFxuHqXQ6RKUOFSyVbKN4CU7k")
+session = vk_api.VkApi(token="vk1.a.gU7O8....KN4CU7k")
 vk = session.get_api()
 
 '''
