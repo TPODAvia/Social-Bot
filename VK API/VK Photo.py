@@ -13,7 +13,7 @@ import glob
 from random import randint
 
 #GET TEXT MODULE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-with open('D:/Coding/proverb.txt', 'r', encoding='utf-8') as f:
+with open('D:/Coding API/VK API/proverb.txt', 'r', encoding='utf-8') as f:
     lines = f.readlines()
 count = 0
 
