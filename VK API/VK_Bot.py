@@ -4,12 +4,18 @@ from PIL.ExifTags import TAGS
 from PIL import Image
 import os, os.path
 import numpy as np
-import glob
 from random import randint
 
+#TEST TASK MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+'''
+import datetime
+file = open(r'D:\Coding API\VK API\task.txt', 'a')
+
+file.write(f'{datetime.datetime.now()} - The script ran \n')
+'''
 
 #KATE MOBILE MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-session = vk_api.VkApi(token="vk1.a.O9TF.....JBWPs")
+session = vk_api.VkApi(token="vk1.a.O9TFQM6vudNuJ...GX6JBWPs")
 vk = session.get_api()
 
 #GET UNREAD MODULE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -17,22 +23,22 @@ unread = session.method("messages.getConversations",{"filter": "unread"})
 ItemsUnread = unread['items']
 for j in reversed(ItemsUnread):
     str(j)
-print("Done Reading")
+#print("Done Reading")
 
 FromId = 112856336
 
 if (ItemsUnread == []):
     print("No new messages")
 else:
-    print("From ID: " + str(unread['items'][0]['last_message']['from_id']))
-    print("Date Is: " + str(unread['items'][0]['last_message']['date']))
-    print("Text Is: " + str(unread['items'][0]['last_message']['text']))
+    #print("From ID: " + str(unread['items'][0]['last_message']['from_id']))
+    #print("Date Is: " + str(unread['items'][0]['last_message']['date']))
+    #print("Text Is: " + str(unread['items'][0]['last_message']['text']))
 
     
     if (unread['items'][0]['last_message']['from_id'] == FromId):
         
         #GET TEXT MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        with open('D:/Coding API/new.txt', 'r', encoding='utf-8') as f:
+        with open('D:/Coding API/VK API/Text.txt', 'r', encoding='utf-8') as f:
             lines = f.readlines()
         
         count = 0
@@ -52,10 +58,9 @@ else:
         else:
             send_user_message(290618168, "День добрый отвечает бот. Я добавил вас в список автоответчика. Хозяйн больше не хочет отвечать ни на какие сообщения")
 
-        f = open('new.txt', "+w", encoding="utf-8")
+        f = open('D:/Coding API/VK API/new.txt', "+w", encoding="utf-8")
         for j in reversed(ItemsUnread):
             f.write(str(j)+"\n")
 
         f.close()
-        print("Done Writing")
-        
+        #print("Done Writing")
