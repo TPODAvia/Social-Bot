@@ -1,19 +1,30 @@
 #This programs need to change some lines of code to make it work
-# 1) 'C:/proverb.txt'
-# 2) 'C:/Users/thepo/Pictures/Screenshots'
-# 3) vk_api.VkApi(token="vk1.a.........")
+# 1) 'D:/Coding API/VK API/Text.txt'
+# 2) vk_api.VkApi(token="vk1.a.........")
+# 3) 'D:/Photo masterpieces/Photos/For Uploads'
+# 4) 'D:\Photo masterpieces\Photos\For Reserve'
 
 #IMPORTING LIBS
 import vk_api
 from PIL.ExifTags import TAGS
 from PIL import Image
+import sys
 import os, os.path
+from os import path
 import numpy as np
 import glob
 from random import randint
 
-#GET TEXT MODULE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-with open('D:/Coding API/VK API/Text.txt', 'r', encoding='utf-8') as f:
+#GET TEXT MODULE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+text_dir = 'D:/Coding API/VK API/Text.txt'
+
+#Check if the directory is exist
+if (path.exists(text_dir)==False):
+    print("Check the path. The path does not exist: <<" + text_dir + ">>")
+    sys.exit()
+
+#Read the informations
+with open(text_dir, 'r', encoding='utf-8') as f:
     lines = f.readlines()
 count = 0
 
@@ -24,6 +35,7 @@ for line in lines:
     #print("Line{}: {}".format(count, line.strip()))
     proverbs = np.append(proverbs, line.strip())
 
+#choose a random sentenses
 use_proverbs = proverbs[randint(0, count-1)]
 
 #KATE MOBILE MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -45,29 +57,37 @@ def get_post_ph(attachments):
 #get_user_status(290618168)
 #get_post_ph(attachments="photo290618168_457248620")
 '''
-#Get PICTURE MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#Get PICTURE MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 img_path = np.array([])
 count2 = 0
 
 # get the path/directory
-# ATTENTION! This folder is for copied images only! The image wil delete PERMANENTLY! Do not use a source folder!
-folder_dir = 'D:/Photo masterpieces/Photos/For Uploads'
- 
-# iterate over files in
-# that directory
-for images in glob.iglob(f'{folder_dir}/*'):
-   
-    # check if the image ends with png
+photo_dir = 'D:/Photo masterpieces/Photos/For Uploads'
+
+#Check if the directory is exist
+if (path.exists(photo_dir)==False):
+    print("Check the path. The path does not exist: <<" + photo_dir + ">>")
+    sys.exit()
+
+# iterate over files in that directory
+for images in glob.iglob(f'{photo_dir}/*'):
+
+    # check if the image ends with png/jpg/jpeg/JPG
     if (images.endswith(".png") or images.endswith(".jpg")\
-        or images.endswith(".jpeg")):
+        or images.endswith(".jpeg") or images.endswith(".JPG")):
         count2 += 1
         img_path = np.append(img_path, images)
 
+#Check if Images is exist
+if (str(img_path)=="[]"):
+    print("No Image in folder: " + photo_dir)
+    sys.exit()
+
 use_img_path = img_path[randint(0, count2-1)]
 
-#UPLOAD PICTURE MODULE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#UPLOAD PICTURE MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-#imagename="C:/12 (July 12, 2022)(135 mm)(ISO 200) 1-240 sec at f - 3.2.jpg"
 imagename=str(use_img_path)
 image=Image.open(imagename)
 exifdata=image._getexif()
@@ -86,6 +106,7 @@ print("Lens company: ", exifdata[42035]) #Lens company
 print("Lens NAME: ", exifdata[42036]) #Lens NAME
 '''
 
+#Check the exif-data
 if exifdata==None:
     print("No exifdata")
     text = str(use_proverbs)
@@ -99,7 +120,9 @@ else:
         "ƒ/"+ str(exifdata[33437]) + "\n" + \
         "ISO "+ str(exifdata[34855])
 
+image.close()
 
+#Upload to VK
 import requests
 upload_url = vk.photos.getWallUploadServer(group_id=290618168, v=5.95)['upload_url']
 request = requests.post(upload_url, files={'file': open(imagename, "rb")})
@@ -108,12 +131,19 @@ saved_photo = "photo" + str(save_wall_photo[0]['owner_id'])+"_"+ str(save_wall_p
 vk.wall.post(owner_id=290618168, v=5.95,  message=text, attachments = saved_photo, publish_date=1668669698)
 
 #DELETE PICTURE MODULE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# ATTENTION! This folder is for copied images only! The image wil delete PERMANENTLY! Do not use a source folder!
+import shutil
 
 file_path = str(use_img_path)
-if os.path.isfile(file_path):
-  os.remove(file_path)
-  print("File has been deleted")
-else:
-  print("File does not exist")
+trash_path = "D:\Photo masterpieces\Photos\For Reserve"
 
+#Check if the directory is exist
+if (path.exists(trash_path)==False):
+    print("Check the path. The path does not exist: <<" + trash_path + ">>")
+    sys.exit()
+
+#Move to another directory
+if os.path.isfile(file_path):
+    shutil.move(use_img_path, trash_path)
+    print("File has been moved to <<Reserve>>")
+else:
+    print("File does not exist")

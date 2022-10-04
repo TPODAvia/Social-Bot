@@ -1,3 +1,10 @@
+#This programs need to change some lines of code to make it work
+# 1) 'D:/Coding API/Facebook API/Text.txt'
+# 2) vk_api.VkApi(token="vk1.a.........")
+# 3) 'D:/Photo masterpieces/Photos/For Uploads'
+# 4) 'D:\Photo masterpieces\Photos\For Reserve'
+
+#IMPORTING LIBS
 import cv2 as cv
 import numpy as np
 from matplotlib import pyplot as plt
@@ -7,10 +14,19 @@ import time
 from random import randint
 import glob
 from PIL import Image
+from os import path
+import sys
 
 #GET TEXT MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#THIS SHOULD BE CHANGE vvvvvvv---------------------------------------------------
-with open('D:/Coding API/Facebook API/Text.txt', 'r', encoding='utf-8') as f:
+text_dir='D:/Coding API/Facebook API/Text.txt'
+
+#Check if the directory is exist
+if (path.exists(text_dir)==False):
+    print("Check the path. The path does not exist: <<" + text_dir + ">>")
+    sys.exit()
+
+#Read the informations
+with open(text_dir, 'r', encoding='utf-8') as f:
     lines = f.readlines()
 count = 0
 
@@ -21,8 +37,10 @@ for line in lines:
     #print("Line{}: {}".format(count, line.strip()))
     proverbs = np.append(proverbs, line.strip())
 
+#choose a random sentenses
 use_proverbs = proverbs[randint(0, count-1)]
 
+#Get a trasnslator
 translation = {}
 
 translation[ord('ё')] = 't'
@@ -106,24 +124,36 @@ s2 = s1.translate(translation)
 img_path = np.array([])
 count2 = 0
 
-# get the path/directory
-# ATTENTION! This folder is for copied images only! The image wil delete PERMANENTLY! Do not use a source folder!
+#Get the path/directory
+photo_dir = 'D:/Photo masterpieces/Photos/For Uploads'
+#Check if the directory is exist
+if (path.exists(photo_dir)==False):
+    print("Check the path. The path does not exist: <<" + photo_dir + ">>")
+    sys.exit()
 
-#THIS SHOULD BE CHANGE vvvvvvv---------------------------------------------------
-folder_dir = 'D:/Photo masterpieces/Photos/For Uploads'
- 
-# iterate over files in
-# that directory
-for images in glob.iglob(f'{folder_dir}/*'):
-   
-    # check if the image ends with png
-    if (images.endswith(".png") or images.endswith(".jpg") or images.endswith(".JPG")\
-        or images.endswith(".jpeg")):
+trash_path = "D:\Photo masterpieces\Photos\For Reserve"
+#Check if the directory is exist
+if (path.exists(trash_path)==False):
+    print("Check the path. The path does not exist: <<" + trash_path + ">>")
+    sys.exit()
+
+# iterate over files in that directory
+for images in glob.iglob(f'{photo_dir}/*'):
+
+    # check if the image ends with png/jpg/jpeg/JPG
+    if (images.endswith(".png") or images.endswith(".jpg")\
+        or images.endswith(".jpeg") or images.endswith(".JPG")):
         count2 += 1
         img_path = np.append(img_path, images)
+
+#Check if images is exist
+if (str(img_path)=="[]"):
+    print("No Image in folder: " + photo_dir)
+    sys.exit()
+
 use_img_path = img_path[randint(0, count2-1)]
 
-#UPLOAD PICTURE MODULE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#UPLOAD PICTURE MODULE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 imagename=str(use_img_path)
 image=Image.open(imagename)
 exifdata=image._getexif()
@@ -141,7 +171,7 @@ print("Body NAME: ", exifdata[272]) #Body NAME
 print("Lens company: ", exifdata[42035]) #Lens company
 print("Lens NAME: ", exifdata[42036]) #Lens NAME
 '''
-
+#Check the exif-data
 if exifdata==None:
     print("No exifdata")
     text = str(use_proverbs)
@@ -154,10 +184,9 @@ else:
         "1/"+ str(1/exifdata[33434]) + " sec\n" + \
         "f/"+ str(exifdata[33437]) + "\n" + \
         "ISO "+ str(exifdata[34855])
-
+image.close()
 
 #Facebook OPEN CV +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#THIS SHOULD BE CHANGE vvvvvvv---------------------------------------------------
 webbrowser.open('https://www.facebook.com/heli.avia.7')
 time.sleep(6)
 myScreenshot = pyautogui.screenshot()
@@ -165,7 +194,11 @@ myScreenshot.save(r'D:\Coding API\Facebook API\Screenshot.png')
 img = cv.imread('D:\Coding API\Facebook API\Screenshot.png',0)
 img2 = img.copy()
 
-#THIS SHOULD BE CHANGE vvvvvvv---------------------------------------------------
+#Check if the directory is exist
+if (path.exists("D:\Coding API\Facebook API")==False):
+    print("Check the path. The path does not exist: <<D:\Coding API\Facebook API>>")
+    sys.exit()
+
 template = cv.imread('D:\Coding API\Facebook API\WriteSMTH.png',0)
 w, h = template.shape[::-1]
 # All the 6 methods for comparison in a list
@@ -186,11 +219,13 @@ if method in [cv.TM_SQDIFF, cv.TM_SQDIFF_NORMED]:
 else:
     top_left = max_loc
 
+#Move mouse
 pyautogui.moveTo(top_left[0] + w/2, top_left[1]+ h/2)
 pyautogui.click()
 time.sleep(5)
+pyautogui.moveTo(top_left[0] + w/2, top_left[1]-200)
 
-#COPY IMAGE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#COPY IMAGE MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 from io import BytesIO
 import win32clipboard
@@ -204,7 +239,6 @@ def send_to_clipboard(clip_type, data):
 filepath = use_img_path
 image = Image.open(filepath)
 
-#COPY IMAGE MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 output = BytesIO()
 image.convert("RGB").save(output, "BMP")
 data = output.getvalue()[14:]
@@ -241,7 +275,7 @@ myScreenshot.save(r'D:\Coding API\Facebook API\Screenshot2.png')
 img = cv.imread('D:\Coding API\Facebook API\Screenshot2.png',0)
 img2 = img.copy()
 
-#THIS SHOULD BE CHANGE vvvvvvv---------------------------------------------------
+
 template = cv.imread('D:\Coding API\Facebook API\Post.png',0)
 w, h = template.shape[::-1]
 # All the 6 methods for comparison in a list
@@ -263,22 +297,21 @@ else:
     top_left = max_loc
 
 
-#UPLOAD CONTENT +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#UPLOAD CONTENT ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 pyautogui.moveTo(top_left[0] + w/2, top_left[1]+ h/2)
+#pyautogui.click()
 
-'''
-pyautogui.click()
-
-#DELETE PICTURE MODULE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# ATTENTION! This folder is for copied images only! The image wil delete PERMANENTLY! Do not use a source folder!
+#DELETE PICTURE MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 import os, os.path
+import shutil
 
 file_path = str(use_img_path)
+
+#Move to another directory
 if os.path.isfile(file_path):
-  os.remove(file_path)
-  print("File has been deleted")
+    shutil.move(use_img_path, trash_path)
+    print("File has been moved to <<Reserve>>")
 else:
-  print("File does not exist")
-  
-'''
+    print("File does not exist")
+
