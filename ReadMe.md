@@ -2,6 +2,23 @@
 
 This project is maintaining for automatization for VK and Facebook.
 
+## How to use(For Windows user guide):
+
+    1) Install Python. Install Visual Studio Code.
+    2) In Visual Studio Code go to the "Extensions"(Or Ctrl+Shift+X) and install needed extensions.
+    3) Install libraries:
+        pip install opencv-python
+        pip install Pillow
+        pip install numpy
+        pip install glob2
+        pip install vk-api
+        pip install PyAutoGUI
+        pip install pycopy-webbrowser
+        pip install matplotlib
+        so on...
+    4) Change a few lines of code to make it work. Run, test and see if it works or not.
+    5) On Windows OS run search and type "Task Scheduler". Add python program to list and enjoy your automatisations! :)
+
 ## VK API projects:
 
 The VK algorithm is fully based on [Kate Mobile](https://dev.vk.com/method).
