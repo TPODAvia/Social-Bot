@@ -25,7 +25,8 @@ for j in reversed(ItemsUnread):
     str(j)
 #print("Done Reading")
 
-FromId = 112856336
+# Id Receiver
+FromId = 290618168
 
 if (ItemsUnread == []):
     print("No new messages")
@@ -42,6 +43,7 @@ else:
             lines = f.readlines()
         
         count = 0
+        
         # Strips the newline character
         proverbs = np.array([])
         for line in lines:
@@ -53,11 +55,16 @@ else:
         def send_user_message(user_id, text):
             session.method("messages.send",{"random_id": 0 ,"peer_id": user_id, "message": text})
 
-        if (proverbs[0]==str(j)):
-            send_user_message(290618168, "Не надо писать одной тоже пожалуйста")
-        else:
-            send_user_message(290618168, "День добрый отвечает бот. Я добавил вас в список автоответчика. Хозяйн больше не хочет отвечать ни на какие сообщения")
+        #Id Sender
+        UserId = 290618168
 
+        #Text Logic
+        if (proverbs[0]==str(j)):
+            send_user_message(UserId, "Не надо писать одной тоже пожалуйста")
+        else:
+            send_user_message(UserId, "День добрый отвечает бот. Я добавил вас в список автоответчика. Хозяйн больше не хочет отвечать ни на какие сообщения")
+
+        #Memory Algorithm
         f = open('D:/Coding API/VK API/new.txt', "+w", encoding="utf-8")
         for j in reversed(ItemsUnread):
             f.write(str(j)+"\n")

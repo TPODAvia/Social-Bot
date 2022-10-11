@@ -1,8 +1,9 @@
 #This programs need to change some lines of code to make it work
 # 1) 'D:/Coding API/VK API/Text.txt'
 # 2) vk_api.VkApi(token="vk1.a.........")
-# 3) 'D:/Photo masterpieces/Photos/For Uploads'
-# 4) 'D:\Photo masterpieces\Photos\For Reserve'
+# 3) my_id = 1234567890
+# 4) 'D:/Photo masterpieces/Photos/For Uploads'
+# 5) 'D:\Photo masterpieces\Photos\For Reserve'
 
 #IMPORTING LIBS
 import vk_api
@@ -92,6 +93,7 @@ imagename=str(use_img_path)
 image=Image.open(imagename)
 exifdata=image._getexif()
 
+#Open this bracket to test
 '''
 print("Shutter speed: ", exifdata[33434]) #Ss
 print("F-stop: ", exifdata[33437]) #f-stop
@@ -113,6 +115,7 @@ if exifdata==None:
     # IDK How to solve "'NoneType' object is not subscriptable"
     # If someone know? Please text me
 else:
+    # Print "use_proverbs" + Focal lenght + Shutter speed + Aperature + ISO
     text = str(use_proverbs) + "\n\n"+ \
         str(exifdata[42035]) + " " + str(exifdata[42036]) + "\n" + \
         str(exifdata[37386]) + " mm (" + str(exifdata[41989]) + "mm equivalent)\n" + \
@@ -120,15 +123,19 @@ else:
         "ƒ/"+ str(exifdata[33437]) + "\n" + \
         "ISO "+ str(exifdata[34855])
 
+#We need to close image else we can't mov this image to Reserve
 image.close()
 
 #Upload to VK
 import requests
-upload_url = vk.photos.getWallUploadServer(group_id=290618168, v=5.95)['upload_url']
+# Your id
+my_id = 290618168
+upload_url = vk.photos.getWallUploadServer(group_id=my_id, v=5.95)['upload_url']
 request = requests.post(upload_url, files={'file': open(imagename, "rb")})
-save_wall_photo= vk.photos.saveWallPhoto(group_id= 290618168, v=5.95, photo=request.json()['photo'], server = request.json()['server'], hash = request.json()['hash'])
+save_wall_photo= vk.photos.saveWallPhoto(group_id= my_id, v=5.95, photo=request.json()['photo'], server = request.json()['server'], hash = request.json()['hash'])
 saved_photo = "photo" + str(save_wall_photo[0]['owner_id'])+"_"+ str(save_wall_photo[0]['id'])
-vk.wall.post(owner_id=290618168, v=5.95,  message=text, attachments = saved_photo, publish_date=1668669698)
+vk.wall.post(owner_id=my_id, v=5.95,  message=text, attachments = saved_photo, publish_date=2668669698)
+#vk.wall.post(owner_id=my_id, v=5.95,  message=text, attachments = saved_photo)
 
 #DELETE PICTURE MODULE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 import shutil
