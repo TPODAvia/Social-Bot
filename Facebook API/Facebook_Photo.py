@@ -1,6 +1,6 @@
 #This programs need to change some lines of code to make it work
 # 1) 'D:/Coding API/Facebook API/Text.txt'
-# 2) vk_api.VkApi(token="vk1.a.........")
+# 2) https://www.facebook.com/.....
 # 3) 'D:/Photo masterpieces/Photos/For Uploads'
 # 4) 'D:\Photo masterpieces\Photos\For Reserve'
 
@@ -187,7 +187,7 @@ else:
 image.close()
 
 #Facebook OPEN CV +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-webbrowser.open('https://www.facebook.com/heli.avia.7')
+webbrowser.open('https://www.facebook.com/.....')
 time.sleep(6)
 myScreenshot = pyautogui.screenshot()
 myScreenshot.save(r'D:\Coding API\Facebook API\Screenshot.png')
