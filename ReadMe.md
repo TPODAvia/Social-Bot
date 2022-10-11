@@ -23,8 +23,8 @@ This project is maintaining for automatization for VK and Facebook.
 
 The VK algorithm is fully based on [Kate Mobile](https://dev.vk.com/method).
 
-    1) Photo Upload Bot [VK_Photo.py] ['Testing']
-    2) Chat Answering Bot [VK_ChatBot.py] ['Released']
+    1) Photo Upload Bot [VK_Photo.py] ['Released']
+    2) Chat Answering Bot [VK_ChatBot.py] ['Testing']
 
 ## Facebook API projects:
 
