@@ -3,6 +3,7 @@
 # 2) https://www.facebook.com/.....
 # 3) 'D:/Photo masterpieces/Photos/For Uploads'
 # 4) 'D:\Photo masterpieces\Photos\For Reserve'
+# 5) To run Task Scheduler? please watch https://www.youtube.com/watch?v=lzy8KNnqV0I&ab_channel=CallThatGeekVideos
 
 #IMPORTING LIBS
 import cv2 as cv
@@ -10,12 +11,21 @@ import numpy as np
 from matplotlib import pyplot as plt
 import pyautogui
 import webbrowser
-import time
+import pyperclip, keyboard, time
 from random import randint
 import glob
 from PIL import Image
 from os import path
 import sys
+
+
+#TEST TASK MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+'''
+import datetime
+file = open(r'D:\Coding API\Facebook API\task.txt', 'a')
+
+file.write(f'{datetime.datetime.now()} - The script ran 1 \n')
+'''
 
 #GET TEXT MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 text_dir='D:/Coding API/Facebook API/Text.txt'
@@ -40,98 +50,18 @@ for line in lines:
 #choose a random sentenses
 use_proverbs = proverbs[randint(0, count-1)]
 
-#Get a trasnslator
-translation = {}
-
-translation[ord('ё')] = 't'
-translation[ord('й')] = 'q'
-translation[ord('ц')] = 'w'
-translation[ord('у')] = 'e'
-translation[ord('к')] = 'r'
-translation[ord('е')] = 't'
-translation[ord('н')] = 'y'
-translation[ord('г')] = 'u'
-translation[ord('ш')] = 'i'
-translation[ord('щ')] = 'o'
-translation[ord('з')] = 'p'
-translation[ord('х')] = '['
-translation[ord('ъ')] = ']'
-translation[ord('ф')] = 'a'
-translation[ord('ы')] = 's'
-translation[ord('в')] = 'd'
-translation[ord('а')] = 'f'
-translation[ord('п')] = 'g'
-translation[ord('р')] = 'h'
-translation[ord('о')] = 'j'
-translation[ord('л')] = 'k'
-translation[ord('д')] = 'l'
-translation[ord('ж')] = ';'
-translation[ord('э')] = "'"
-translation[ord('я')] = 'z'
-translation[ord('ч')] = 'x'
-translation[ord('с')] = 'c'
-translation[ord('м')] = 'v'
-translation[ord('и')] = 'b'
-translation[ord('т')] = 'n'
-translation[ord('ь')] = 'm'
-translation[ord('б')] = ','
-translation[ord('ю')] = '.'
-translation[ord('.')] = '/'
-
-translation[ord('Ё')] = 'T'
-translation[ord('Й')] = 'Q'
-translation[ord('Ц')] = 'W'
-translation[ord('У')] = 'E'
-translation[ord('К')] = 'R'
-translation[ord('Е')] = 'T'
-translation[ord('Н')] = 'Y'
-translation[ord('Г')] = 'U'
-translation[ord('Ш')] = 'I'
-translation[ord('Щ')] = 'O'
-translation[ord('З')] = 'P'
-translation[ord('Х')] = '{'
-translation[ord('Ъ')] = '}'
-translation[ord('Ф')] = 'A'
-translation[ord('Ы')] = 'S'
-translation[ord('В')] = 'D'
-translation[ord('А')] = 'F'
-translation[ord('П')] = 'G'
-translation[ord('Р')] = 'H'
-translation[ord('О')] = 'J'
-translation[ord('Л')] = 'K'
-translation[ord('Д')] = 'L'
-translation[ord('Ж')] = ':'
-translation[ord('Э')] = '"'
-translation[ord('Я')] = 'Z'
-translation[ord('Ч')] = 'X'
-translation[ord('С')] = 'C'
-translation[ord('М')] = 'V'
-translation[ord('И')] = 'B'
-translation[ord('Т')] = 'N'
-translation[ord('Ь')] = 'M'
-translation[ord('Б')] = '<'
-translation[ord('Ю')] = '>'
-translation[ord(',')] = '?'
-
-translation[ord(':')] = '^'
-translation[ord('?')] = '&'
-translation[ord(';')] = '$'
-
-s1 = str(use_proverbs)
-s2 = s1.translate(translation)
-
 #Get PICTURE MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 img_path = np.array([])
 count2 = 0
 
 #Get the path/directory
-photo_dir = 'D:/Photo masterpieces/Photos/For Uploads'
+photo_dir = 'D:\Photo masterpieces\Photos\For Reserve'
 #Check if the directory is exist
 if (path.exists(photo_dir)==False):
     print("Check the path. The path does not exist: <<" + photo_dir + ">>")
     sys.exit()
 
-trash_path = "D:\Photo masterpieces\Photos\For Reserve"
+trash_path = "D:\Photo masterpieces\Photos\For Trash"
 #Check if the directory is exist
 if (path.exists(trash_path)==False):
     print("Check the path. The path does not exist: <<" + trash_path + ">>")
@@ -225,6 +155,35 @@ pyautogui.click()
 time.sleep(5)
 pyautogui.moveTo(top_left[0] + w/2, top_left[1]-200)
 
+#WRITE KEYBOARD MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+def paste(text: str):    
+    buffer = pyperclip.paste()
+    pyperclip.copy(text)
+    keyboard.press_and_release('ctrl + v')
+    pyperclip.copy(buffer)
+
+
+def type(text: str, interval=0.0):
+    if interval == 0.0:
+        paste(text)
+        return
+
+    buffer = pyperclip.paste()
+    for char in text:
+        pyperclip.copy(char)
+        keyboard.press_and_release('ctrl + v')
+        time.sleep(interval)
+    pyperclip.copy(buffer)
+
+time.sleep(4)
+pyautogui.click()
+time.sleep(1)
+type(str(use_proverbs), 0.05)
+time.sleep(1)
+type(text, 0.05)
+time.sleep(1)
+
 #COPY IMAGE MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 from io import BytesIO
@@ -246,25 +205,6 @@ output.close()
 
 send_to_clipboard(win32clipboard.CF_DIB, data)
 
-
-#CHECK KEYBOARD MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-import ctypes
-user32 = ctypes.WinDLL('user32', use_last_error=True)
-curr_window = user32.GetForegroundWindow()
-thread_id = user32.GetWindowThreadProcessId(curr_window, 0)
-klid = user32.GetKeyboardLayout(thread_id)
-lid = klid & (2**16 - 1)
-lid_hex = hex(lid)
-if (lid_hex=="0x409"):
-    pyautogui.hotkey("shift", "alt")
-
-#WRITE KEYBOARD MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-time.sleep(5)
-pyautogui.click()
-pyautogui.write(str(s2), interval=0.02)
-pyautogui.hotkey("shift", "alt")
-pyautogui.click()
-pyautogui.write(text, interval=0.02)
 pyautogui.hotkey('ctrl', 'v')
 
 time.sleep(30)
@@ -296,11 +236,10 @@ if method in [cv.TM_SQDIFF, cv.TM_SQDIFF_NORMED]:
 else:
     top_left = max_loc
 
-
 #UPLOAD CONTENT ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 pyautogui.moveTo(top_left[0] + w/2, top_left[1]+ h/2)
-#pyautogui.click()
+pyautogui.click()
 
 #DELETE PICTURE MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 import os, os.path
@@ -311,7 +250,6 @@ file_path = str(use_img_path)
 #Move to another directory
 if os.path.isfile(file_path):
     shutil.move(use_img_path, trash_path)
-    print("File has been moved to <<Reserve>>")
+    print("File has been moved to <<Trash>>")
 else:
     print("File does not exist")
-

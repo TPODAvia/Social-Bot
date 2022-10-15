@@ -1,3 +1,5 @@
+# 1) To run Task Scheduler? please watch https://www.youtube.com/watch?v=lzy8KNnqV0I&ab_channel=CallThatGeekVideos
+
 #IMPORTING LIBS
 import vk_api
 from PIL.ExifTags import TAGS
@@ -5,6 +7,7 @@ from PIL import Image
 import os, os.path
 import numpy as np
 from random import randint
+import sys
 
 #TEST TASK MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 '''
@@ -26,10 +29,12 @@ for j in reversed(ItemsUnread):
 #print("Done Reading")
 
 # Id Receiver
-FromId = 290618168
+FromId = 12345678
 
 if (ItemsUnread == []):
     print("No new messages")
+    sys.exit()
+
 else:
     #print("From ID: " + str(unread['items'][0]['last_message']['from_id']))
     #print("Date Is: " + str(unread['items'][0]['last_message']['date']))
@@ -56,7 +61,7 @@ else:
             session.method("messages.send",{"random_id": 0 ,"peer_id": user_id, "message": text})
 
         #Id Sender
-        UserId = 290618168
+        UserId = 12345678
 
         #Text Logic
         if (proverbs[0]==str(j)):

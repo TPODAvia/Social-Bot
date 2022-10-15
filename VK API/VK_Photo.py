@@ -4,6 +4,7 @@
 # 3) my_id = 1234567890
 # 4) 'D:/Photo masterpieces/Photos/For Uploads'
 # 5) 'D:\Photo masterpieces\Photos\For Reserve'
+# 6) To run Task Scheduler? please watch https://www.youtube.com/watch?v=lzy8KNnqV0I&ab_channel=CallThatGeekVideos
 
 #IMPORTING LIBS
 import vk_api
@@ -15,6 +16,14 @@ from os import path
 import numpy as np
 import glob
 from random import randint
+
+#TEST TASK MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+''''''
+import datetime
+file = open(r'D:\Coding API\VK API\task.txt', 'a')
+
+file.write(f'{datetime.datetime.now()} - The script ran \n')
+
 
 #GET TEXT MODULE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 text_dir = 'D:/Coding API/VK API/Text.txt'
@@ -129,13 +138,13 @@ image.close()
 #Upload to VK
 import requests
 # Your id
-my_id = 290618168
+my_id = 12345678
 upload_url = vk.photos.getWallUploadServer(group_id=my_id, v=5.95)['upload_url']
 request = requests.post(upload_url, files={'file': open(imagename, "rb")})
 save_wall_photo= vk.photos.saveWallPhoto(group_id= my_id, v=5.95, photo=request.json()['photo'], server = request.json()['server'], hash = request.json()['hash'])
 saved_photo = "photo" + str(save_wall_photo[0]['owner_id'])+"_"+ str(save_wall_photo[0]['id'])
-vk.wall.post(owner_id=my_id, v=5.95,  message=text, attachments = saved_photo, publish_date=2668669698)
-#vk.wall.post(owner_id=my_id, v=5.95,  message=text, attachments = saved_photo)
+#vk.wall.post(owner_id=my_id, v=5.95,  message=text, attachments = saved_photo, publish_date=1668669698)
+vk.wall.post(owner_id=my_id, v=5.95,  message=text, attachments = saved_photo)
 
 #DELETE PICTURE MODULE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 import shutil
