@@ -6,6 +6,7 @@
 # 5) To run Task Scheduler? please watch https://www.youtube.com/watch?v=lzy8KNnqV0I&ab_channel=CallThatGeekVideos
 
 #IMPORTING LIBS
+from cmath import nan
 import cv2 as cv
 import numpy as np
 from matplotlib import pyplot as plt
@@ -88,6 +89,15 @@ imagename=str(use_img_path)
 image=Image.open(imagename)
 exifdata=image._getexif()
 
+exifdata[42035] = nan #Lens company
+exifdata[42036] = nan #Lens NAME
+exifdata[37386] = nan #Focal Lenght
+exifdata[41989] = nan #Focal Equivalent
+exifdata[33434] = nan #Ss
+exifdata[33437] = nan #f-stop
+exifdata[34855] = nan #ISO
+exifdata=image._getexif()
+
 '''
 print("Shutter speed: ", exifdata[33434]) #Ss
 print("F-stop: ", exifdata[33437]) #f-stop
@@ -101,12 +111,13 @@ print("Body NAME: ", exifdata[272]) #Body NAME
 print("Lens company: ", exifdata[42035]) #Lens company
 print("Lens NAME: ", exifdata[42036]) #Lens NAME
 '''
+
 #Check the exif-data
 if exifdata==None:
-    print("No exifdata")
-    text = str(use_proverbs)
-    # IDK How to solve "'NoneType' object is not subscriptable"
-    # If someone know? Please text me
+    if exifdata[42035] or exifdata[42036] or exifdata[37386] or \
+        exifdata[41989] or exifdata[33434] or exifdata[33437] or exifdata[34855] == nan :
+        print("No exifdata")
+        text = str(use_proverbs)
 else:
     text = "\n\n"+ \
         str(exifdata[42035]) + " " + str(exifdata[42036]) + "\n" + \
@@ -118,7 +129,7 @@ image.close()
 
 #Facebook OPEN CV +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 webbrowser.open('https://www.facebook.com/.....')
-time.sleep(6)
+time.sleep(25)
 myScreenshot = pyautogui.screenshot()
 myScreenshot.save(r'D:\Coding API\Facebook API\Screenshot.png')
 img = cv.imread('D:\Coding API\Facebook API\Screenshot.png',0)
@@ -253,3 +264,12 @@ if os.path.isfile(file_path):
     print("File has been moved to <<Trash>>")
 else:
     print("File does not exist")
+
+screenshot1 = 'D:\Coding API\Facebook API\Screenshot.png'
+screenshot2 = 'D:\Coding API\Facebook API\Screenshot2.png'
+if os.path.isfile(screenshot1):
+  os.remove(screenshot1)
+  os.remove(screenshot2)
+  print("File has been deleted")
+else:
+  print("File does not exist")

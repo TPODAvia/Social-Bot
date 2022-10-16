@@ -17,7 +17,8 @@ This project is maintaining for automatization for VK and Facebook.
         pip install matplotlib
         so on...
     4) Change a few lines of code to make it work. Run, test and see if it works or not.
-    5) On Windows OS run search and type "Task Scheduler". Add python program to list and enjoy your automatisations! :)
+    5) On Windows OS run search and type "Task Scheduler". Add python program to list and enjoy your automatizations! :)
+    To run Task Scheduler? please watch https://www.youtube.com/watch?v=lzy8KNnqV0I&ab_channel=CallThatGeekVideos
 
 ## VK API projects:
 

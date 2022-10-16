@@ -7,6 +7,8 @@
 # 6) To run Task Scheduler? please watch https://www.youtube.com/watch?v=lzy8KNnqV0I&ab_channel=CallThatGeekVideos
 
 #IMPORTING LIBS
+from cmath import nan
+from pyscreeze import screenshot
 import vk_api
 from PIL.ExifTags import TAGS
 from PIL import Image
@@ -18,12 +20,12 @@ import glob
 from random import randint
 
 #TEST TASK MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-''''''
+'''
 import datetime
 file = open(r'D:\Coding API\VK API\task.txt', 'a')
 
 file.write(f'{datetime.datetime.now()} - The script ran \n')
-
+'''
 
 #GET TEXT MODULE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 text_dir = 'D:/Coding API/VK API/Text.txt'
@@ -102,6 +104,15 @@ imagename=str(use_img_path)
 image=Image.open(imagename)
 exifdata=image._getexif()
 
+exifdata[42035] = nan #Lens company
+exifdata[42036] = nan #Lens NAME
+exifdata[37386] = nan #Focal Lenght
+exifdata[41989] = nan #Focal Equivalent
+exifdata[33434] = nan #Ss
+exifdata[33437] = nan #f-stop
+exifdata[34855] = nan #ISO
+exifdata=image._getexif()
+
 #Open this bracket to test
 '''
 print("Shutter speed: ", exifdata[33434]) #Ss
@@ -119,10 +130,10 @@ print("Lens NAME: ", exifdata[42036]) #Lens NAME
 
 #Check the exif-data
 if exifdata==None:
-    print("No exifdata")
-    text = str(use_proverbs)
-    # IDK How to solve "'NoneType' object is not subscriptable"
-    # If someone know? Please text me
+    if exifdata[42035] or exifdata[42036] or exifdata[37386] or \
+        exifdata[41989] or exifdata[33434] or exifdata[33437] or exifdata[34855] == nan :
+        print("No exifdata")
+        text = str(use_proverbs)
 else:
     # Print "use_proverbs" + Focal lenght + Shutter speed + Aperature + ISO
     text = str(use_proverbs) + "\n\n"+ \
