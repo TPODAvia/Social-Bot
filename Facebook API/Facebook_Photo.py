@@ -88,15 +88,17 @@ use_img_path = img_path[randint(0, count2-1)]
 imagename=str(use_img_path)
 image=Image.open(imagename)
 exifdata=image._getexif()
-
-exifdata[42035] = nan #Lens company
-exifdata[42036] = nan #Lens NAME
-exifdata[37386] = nan #Focal Lenght
-exifdata[41989] = nan #Focal Equivalent
-exifdata[33434] = nan #Ss
-exifdata[33437] = nan #f-stop
-exifdata[34855] = nan #ISO
-exifdata=image._getexif()
+if exifdata != None:
+    exifdata[42035] = nan #Lens company
+    exifdata[42036] = nan #Lens NAME
+    exifdata[37386] = nan #Focal Lenght
+    exifdata[41989] = nan #Focal Equivalent
+    exifdata[33434] = nan #Ss
+    exifdata[33437] = nan #f-stop``
+    exifdata[34855] = nan #ISO
+    exifdata2=image._getexif()
+    for x in exifdata2:
+        exifdata[x] = exifdata2[x]
 
 '''
 print("Shutter speed: ", exifdata[33434]) #Ss
@@ -113,11 +115,10 @@ print("Lens NAME: ", exifdata[42036]) #Lens NAME
 '''
 
 #Check the exif-data
-if exifdata==None:
-    if exifdata[42035] or exifdata[42036] or exifdata[37386] or \
-        exifdata[41989] or exifdata[33434] or exifdata[33437] or exifdata[34855] == nan :
-        print("No exifdata")
-        text = str(use_proverbs)
+if exifdata==None or (exifdata[42035] or exifdata[42036] or exifdata[37386] or \
+    exifdata[41989] or exifdata[33434] or exifdata[33437] or exifdata[34855]) == nan:
+    print("No exifdata")
+    text = str(use_proverbs)
 else:
     text = "\n\n"+ \
         str(exifdata[42035]) + " " + str(exifdata[42036]) + "\n" + \
