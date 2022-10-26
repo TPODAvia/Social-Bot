@@ -3,7 +3,7 @@
 # 2) https://www.facebook.com/.....
 # 3) 'D:/Photo masterpieces/Photos/For Uploads'
 # 4) 'D:\Photo masterpieces\Photos\For Reserve'
-# 5) To run Task Scheduler? please watch https://www.youtube.com/watch?v=lzy8KNnqV0I&ab_channel=CallThatGeekVideos
+# 5) Run "Task Scheduler". To run Task Scheduler? You can open "Task Scheduler Samples" to see the example
 
 #IMPORTING LIBS
 from cmath import nan
@@ -16,24 +16,29 @@ import pyperclip, keyboard, time
 from random import randint
 import glob
 from PIL import Image
+import os, os.path
 from os import path
 import sys
 
-
+print("Python3 run. Do not move your mouse!!!!")
+print("Keyboard and mouse is not disabled!!!!")
+print("Don't move anything!!!!")
+time.sleep(3)
 #TEST TASK MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 '''
 import datetime
-file = open(r'D:\Coding API\Facebook API\task.txt', 'a')
+file = open(os.path.dirname(__file__) + '\task.txt', 'a')
 
 file.write(f'{datetime.datetime.now()} - The script ran 1 \n')
 '''
 
 #GET TEXT MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-text_dir='D:/Coding API/Facebook API/Text.txt'
+text_dir= os.path.dirname(__file__) + '/Text.txt'
 
 #Check if the directory is exist
 if (path.exists(text_dir)==False):
-    print("Check the path. The path does not exist: <<" + text_dir + ">>")
+    print("Check the path. The path or a file does not exist: <<" + text_dir + ">>")
+    time.sleep(3)
     sys.exit()
 
 #Read the informations
@@ -59,13 +64,15 @@ count2 = 0
 photo_dir = 'D:\Photo masterpieces\Photos\For Reserve'
 #Check if the directory is exist
 if (path.exists(photo_dir)==False):
-    print("Check the path. The path does not exist: <<" + photo_dir + ">>")
+    print("Check the path. The path or a file does not exist: <<" + photo_dir + ">>")
+    time.sleep(3)
     sys.exit()
 
 trash_path = "D:\Photo masterpieces\Photos\For Trash"
 #Check if the directory is exist
 if (path.exists(trash_path)==False):
-    print("Check the path. The path does not exist: <<" + trash_path + ">>")
+    print("Check the path. The path or a file does not exist: <<" + trash_path + ">>")
+    time.sleep(3)
     sys.exit()
 
 # iterate over files in that directory
@@ -80,6 +87,7 @@ for images in glob.iglob(f'{photo_dir}/*'):
 #Check if images is exist
 if (str(img_path)=="[]"):
     print("No Image in folder: " + photo_dir)
+    time.sleep(3)
     sys.exit()
 
 use_img_path = img_path[randint(0, count2-1)]
@@ -94,7 +102,7 @@ if exifdata != None:
     exifdata[37386] = nan #Focal Lenght
     exifdata[41989] = nan #Focal Equivalent
     exifdata[33434] = nan #Ss
-    exifdata[33437] = nan #f-stop``
+    exifdata[33437] = nan #f-stop
     exifdata[34855] = nan #ISO
     exifdata2=image._getexif()
     for x in exifdata2:
@@ -118,7 +126,7 @@ print("Lens NAME: ", exifdata[42036]) #Lens NAME
 if exifdata==None or (exifdata[42035] or exifdata[42036] or exifdata[37386] or \
     exifdata[41989] or exifdata[33434] or exifdata[33437] or exifdata[34855]) == nan:
     print("No exifdata")
-    text = str(use_proverbs)
+    text = " "
 else:
     text = "\n\n"+ \
         str(exifdata[42035]) + " " + str(exifdata[42036]) + "\n" + \
@@ -132,23 +140,20 @@ image.close()
 webbrowser.open('https://www.facebook.com/.....')
 time.sleep(25)
 myScreenshot = pyautogui.screenshot()
-myScreenshot.save(r'D:\Coding API\Facebook API\Screenshot.png')
-img = cv.imread('D:\Coding API\Facebook API\Screenshot.png',0)
+
+pathname = os.path.dirname(__file__)     
+myScreenshot.save(os.path.dirname(__file__) + '/Screenshot.png')
+img = cv.imread(os.path.dirname(__file__) + '/Screenshot.png',0)
 img2 = img.copy()
 
-#Check if the directory is exist
-if (path.exists("D:\Coding API\Facebook API")==False):
-    print("Check the path. The path does not exist: <<D:\Coding API\Facebook API>>")
-    sys.exit()
-
-template = cv.imread('D:\Coding API\Facebook API\WriteSMTH.png',0)
+template = cv.imread(os.path.dirname(__file__) + '/WriteSMTH.png',0)
 w, h = template.shape[::-1]
 # All the 6 methods for comparison in a list
 methods = ['cv.TM_CCOEFF', 'cv.TM_CCOEFF_NORMED', 'cv.TM_CCORR',
             'cv.TM_CCORR_NORMED', 'cv.TM_SQDIFF', 'cv.TM_SQDIFF_NORMED']
 
 for meth in methods:
-    print(meth)
+    print("Use method1: " + meth)
 
 img = img2.copy()
 method = eval(meth)
@@ -223,19 +228,19 @@ time.sleep(30)
 
 #Facebook OPEN CV +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 myScreenshot = pyautogui.screenshot()
-myScreenshot.save(r'D:\Coding API\Facebook API\Screenshot2.png')
-img = cv.imread('D:\Coding API\Facebook API\Screenshot2.png',0)
+myScreenshot.save(os.path.dirname(__file__) + '/Screenshot2.png')
+img = cv.imread(os.path.dirname(__file__) + '/Screenshot2.png',0)
 img2 = img.copy()
 
 
-template = cv.imread('D:\Coding API\Facebook API\Post.png',0)
+template = cv.imread(os.path.dirname(__file__) + '/Post.png',0)
 w, h = template.shape[::-1]
 # All the 6 methods for comparison in a list
 methods = ['cv.TM_CCOEFF', 'cv.TM_CCOEFF_NORMED', 'cv.TM_CCORR',
             'cv.TM_CCORR_NORMED', 'cv.TM_SQDIFF', 'cv.TM_SQDIFF_NORMED']
 
 for meth in methods:
-    print("Lol")
+    print("Use method2: " + meth)
 
 img = img2.copy()
 method = eval(meth)
@@ -254,7 +259,6 @@ pyautogui.moveTo(top_left[0] + w/2, top_left[1]+ h/2)
 pyautogui.click()
 
 #DELETE PICTURE MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-import os, os.path
 import shutil
 
 file_path = str(use_img_path)
@@ -266,8 +270,8 @@ if os.path.isfile(file_path):
 else:
     print("File does not exist")
 
-screenshot1 = 'D:\Coding API\Facebook API\Screenshot.png'
-screenshot2 = 'D:\Coding API\Facebook API\Screenshot2.png'
+screenshot1 = os.path.dirname(__file__) + '/Screenshot.png'
+screenshot2 = os.path.dirname(__file__) + '/Screenshot2.png'
 if os.path.isfile(screenshot1):
   os.remove(screenshot1)
   os.remove(screenshot2)

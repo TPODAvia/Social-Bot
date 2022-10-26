@@ -4,7 +4,7 @@
 # 3) my_id = 1234567890
 # 4) 'D:/Photo masterpieces/Photos/For Uploads'
 # 5) 'D:\Photo masterpieces\Photos\For Reserve'
-# 6) To run Task Scheduler? please watch https://www.youtube.com/watch?v=lzy8KNnqV0I&ab_channel=CallThatGeekVideos
+# 6) Run "Task Scheduler". To run Task Scheduler? You can open "Task Scheduler Samples" to see the example
 
 #IMPORTING LIBS
 from cmath import nan
@@ -17,22 +17,27 @@ import os, os.path
 from os import path
 import numpy as np
 import glob
+import time
 from random import randint
 
+print("Python3 run. Do not move your mouse!!!!")
+print("Keyboard and mouse is not disabled!!!!")
+print("Don't move anything!!!!")
 #TEST TASK MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 '''
 import datetime
-file = open(r'D:\Coding API\VK API\task.txt', 'a')
+file = open(os.path.dirname(__file__) + '\task.txt', 'a')
 
 file.write(f'{datetime.datetime.now()} - The script ran \n')
 '''
 
 #GET TEXT MODULE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-text_dir = 'D:/Coding API/VK API/Text.txt'
+text_dir = os.path.dirname(__file__) + '/Text.txt'
 
 #Check if the directory is exist
 if (path.exists(text_dir)==False):
-    print("Check the path. The path does not exist: <<" + text_dir + ">>")
+    print("Check the path. The path or a file does not exist: <<" + text_dir + ">>")
+    time.sleep(3)
     sys.exit()
 
 #Read the informations
@@ -79,7 +84,8 @@ photo_dir = 'D:/Photo masterpieces/Photos/For Uploads'
 
 #Check if the directory is exist
 if (path.exists(photo_dir)==False):
-    print("Check the path. The path does not exist: <<" + photo_dir + ">>")
+    print("Check the path. The path or a file does not exist: <<" + photo_dir + ">>")
+    time.sleep(3)
     sys.exit()
 
 # iterate over files in that directory
@@ -94,6 +100,7 @@ for images in glob.iglob(f'{photo_dir}/*'):
 #Check if Images is exist
 if (str(img_path)=="[]"):
     print("No Image in folder: " + photo_dir)
+    time.sleep(3)
     sys.exit()
 
 use_img_path = img_path[randint(0, count2-1)]
@@ -166,7 +173,8 @@ trash_path = "D:\Photo masterpieces\Photos\For Reserve"
 
 #Check if the directory is exist
 if (path.exists(trash_path)==False):
-    print("Check the path. The path does not exist: <<" + trash_path + ">>")
+    print("Check the path. The path or a file does not exist: <<" + trash_path + ">>")
+    time.sleep(3)
     sys.exit()
 
 #Move to another directory
