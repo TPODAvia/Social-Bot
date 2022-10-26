@@ -13,13 +13,16 @@ This project is maintaining for automatization for VK and Facebook.
         pip install glob2
         pip install vk-api
         pip install PyAutoGUI
-        pip install pycopy-webbrowser
+        pip install pywin32
+        pip install keyboard
+        pip install mouse
         pip install matplotlib
+        pip install pycopy-webbrowser
+        pip install pytest-shutil
         so on...
     4) Change a few lines of code to make it work. Run, test and see if it works or not.
     5) On Windows OS run search and type "Task Scheduler". Add python program to list and enjoy your automatizations! :)
-    To run Task Scheduler? please watch https://www.youtube.com/watch?v=lzy8KNnqV0I&ab_channel=CallThatGeekVideos
-
+    6) To run Task Scheduler? You can open "Task Scheduler Samples" to see the example
 ## VK API projects:
 
 The VK algorithm is fully based on [Kate Mobile](https://dev.vk.com/method).

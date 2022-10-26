@@ -1,4 +1,8 @@
-# 1) To run Task Scheduler? please watch https://www.youtube.com/watch?v=lzy8KNnqV0I&ab_channel=CallThatGeekVideos
+# 1) 'D:/Coding API/VK API/Text.txt'
+# 2) vk_api.VkApi(token="vk1.a.........")
+# 3) FromId = 1234567890
+# 4) UserId = 1234567890
+# 5) Run "Task Scheduler". To run Task Scheduler? You can open "Task Scheduler Samples" to see the example
 
 #IMPORTING LIBS
 import vk_api
@@ -7,12 +11,16 @@ from PIL import Image
 import os, os.path
 import numpy as np
 from random import randint
+import time
 import sys
 
+print("Python3 run. Do not move your mouse!!!!")
+print("Keyboard and mouse is not disabled!!!!")
+print("Don't move anything!!!!")
 #TEST TASK MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 '''
 import datetime
-file = open(r'D:\Coding API\VK API\task.txt', 'a')
+file = open(os.path.dirname(__file__) + '\task.txt', 'a')
 
 file.write(f'{datetime.datetime.now()} - The script ran \n')
 '''
@@ -33,6 +41,7 @@ FromId = 12345678
 
 if (ItemsUnread == []):
     print("No new messages")
+    time.sleep(3)
     sys.exit()
 
 else:
@@ -44,7 +53,7 @@ else:
     if (unread['items'][0]['last_message']['from_id'] == FromId):
         
         #GET TEXT MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        with open('D:/Coding API/VK API/Text.txt', 'r', encoding='utf-8') as f:
+        with open(os.path.dirname(__file__) + '/Text.txt', 'r', encoding='utf-8') as f:
             lines = f.readlines()
         
         count = 0
@@ -70,7 +79,7 @@ else:
             send_user_message(UserId, "День добрый отвечает бот. Я добавил вас в список автоответчика. Хозяйн больше не хочет отвечать ни на какие сообщения")
 
         #Memory Algorithm
-        f = open('D:/Coding API/VK API/new.txt', "+w", encoding="utf-8")
+        f = open(os.path.dirname(__file__) + '/new.txt', "+w", encoding="utf-8")
         for j in reversed(ItemsUnread):
             f.write(str(j)+"\n")
 
