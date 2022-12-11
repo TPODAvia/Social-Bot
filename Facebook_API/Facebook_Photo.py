@@ -7,7 +7,8 @@
 
 photo_dir = 'D:\Photo_masterpieces\Photos\For_Reserve'
 trash_path = 'D:\Photo_masterpieces\Photos\For_Trash'
-web_link = 'https://www.facebook.com/heli.avia.7/'
+web_link = 'https://www.facebook.com/.../'
+Template_Matching_LookUp = ['/1WriteSMTH.png', '/2WriteSMTH2.png', '/3Post.png']
 
 #IMPORTING LIBS
 from cmath import nan
@@ -141,74 +142,47 @@ print("Lens NAME: ", exifdata[42036]) #Lens NAME
 #         "ISO "+ str(exifdata[34855])
 # image.close()
 
-#Facebook OPEN CV +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#web_link = 'https://www.facebook.com...'
+#Move to template module +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+def move_to_template(FromScreenshot):
+    myScreenshot = pyautogui.screenshot()
+
+    pathname = os.path.dirname(__file__)     
+    myScreenshot.save(os.path.dirname(__file__) + '/Screenshot.png')
+    img = cv.imread(os.path.dirname(__file__) + '/Screenshot.png',0)
+    img2 = img.copy()
+
+    template = cv.imread(os.path.dirname(__file__) + FromScreenshot,0)
+    w, h = template.shape[::-1]
+    # All the 6 methods for comparison in a list
+    methods = ['cv.TM_CCOEFF', 'cv.TM_CCOEFF_NORMED', 'cv.TM_CCORR',
+                'cv.TM_CCORR_NORMED', 'cv.TM_SQDIFF', 'cv.TM_SQDIFF_NORMED']
+
+    for meth in methods:
+        print("Use method1: " + meth)
+
+    img = img2.copy()
+    method = eval(meth)
+    # Apply template Matching
+    res = cv.matchTemplate(img,template,method)
+    min_val, max_val, min_loc, max_loc = cv.minMaxLoc(res)
+    # If the method is TM_SQDIFF or TM_SQDIFF_NORMED, take minimum
+    if method in [cv.TM_SQDIFF, cv.TM_SQDIFF_NORMED]:
+        top_left = min_loc
+    else:
+        top_left = max_loc
+
+    #Move mouse
+    pyautogui.moveTo(top_left[0] + w/2, top_left[1]+ h/2)
+    pyautogui.click()
+
+#Facebook OPEN CV +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#web_link = 'https://www.facebook.com/.../'
 webbrowser.open(web_link)
 time.sleep(25)
-myScreenshot = pyautogui.screenshot()
-
-pathname = os.path.dirname(__file__)     
-myScreenshot.save(os.path.dirname(__file__) + '/Screenshot.png')
-img = cv.imread(os.path.dirname(__file__) + '/Screenshot.png',0)
-img2 = img.copy()
-
-template = cv.imread(os.path.dirname(__file__) + '/WriteSMTH.png',0)
-w, h = template.shape[::-1]
-# All the 6 methods for comparison in a list
-methods = ['cv.TM_CCOEFF', 'cv.TM_CCOEFF_NORMED', 'cv.TM_CCORR',
-            'cv.TM_CCORR_NORMED', 'cv.TM_SQDIFF', 'cv.TM_SQDIFF_NORMED']
-
-for meth in methods:
-    print("Use method1: " + meth)
-
-img = img2.copy()
-method = eval(meth)
-# Apply template Matching
-res = cv.matchTemplate(img,template,method)
-min_val, max_val, min_loc, max_loc = cv.minMaxLoc(res)
-# If the method is TM_SQDIFF or TM_SQDIFF_NORMED, take minimum
-if method in [cv.TM_SQDIFF, cv.TM_SQDIFF_NORMED]:
-    top_left = min_loc
-else:
-    top_left = max_loc
-
-#Move mouse
-pyautogui.moveTo(top_left[0] + w/2, top_left[1]+ h/2)
-pyautogui.click()
+move_to_template(Template_Matching_LookUp[0])
 time.sleep(5)
-
-#WRITE SOMETHING MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-myScreenshot = pyautogui.screenshot()
-
-pathname = os.path.dirname(__file__)     
-myScreenshot.save(os.path.dirname(__file__) + '/Screenshot.png')
-img = cv.imread(os.path.dirname(__file__) + '/Screenshot.png',0)
-img2 = img.copy()
-
-template = cv.imread(os.path.dirname(__file__) + '/WriteSMTH2.png',0)
-w, h = template.shape[::-1]
-# All the 6 methods for comparison in a list
-methods = ['cv.TM_CCOEFF', 'cv.TM_CCOEFF_NORMED', 'cv.TM_CCORR',
-            'cv.TM_CCORR_NORMED', 'cv.TM_SQDIFF', 'cv.TM_SQDIFF_NORMED']
-
-for meth in methods:
-    print("Use method1: " + meth)
-
-img = img2.copy()
-method = eval(meth)
-# Apply template Matching
-res = cv.matchTemplate(img,template,method)
-min_val, max_val, min_loc, max_loc = cv.minMaxLoc(res)
-# If the method is TM_SQDIFF or TM_SQDIFF_NORMED, take minimum
-if method in [cv.TM_SQDIFF, cv.TM_SQDIFF_NORMED]:
-    top_left = min_loc
-else:
-    top_left = max_loc
-
-#Move mouse
-pyautogui.moveTo(top_left[0] + w/2, top_left[1]+ h/2)
-pyautogui.click()
+move_to_template(Template_Matching_LookUp[1])
 
 #WRITE KEYBOARD MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -253,37 +227,9 @@ pyautogui.hotkey('ctrl', 'v')
 
 time.sleep(30)
 
-#Facebook OPEN CV +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-myScreenshot = pyautogui.screenshot()
-myScreenshot.save(os.path.dirname(__file__) + '/Screenshot.png')
-img = cv.imread(os.path.dirname(__file__) + '/Screenshot.png',0)
-img2 = img.copy()
-
-
-template = cv.imread(os.path.dirname(__file__) + '/Post.png',0)
-w, h = template.shape[::-1]
-# All the 6 methods for comparison in a list
-methods = ['cv.TM_CCOEFF', 'cv.TM_CCOEFF_NORMED', 'cv.TM_CCORR',
-            'cv.TM_CCORR_NORMED', 'cv.TM_SQDIFF', 'cv.TM_SQDIFF_NORMED']
-
-for meth in methods:
-    print("Use method2: " + meth)
-
-img = img2.copy()
-method = eval(meth)
-# Apply template Matching
-res = cv.matchTemplate(img,template,method)
-min_val, max_val, min_loc, max_loc = cv.minMaxLoc(res)
-# If the method is TM_SQDIFF or TM_SQDIFF_NORMED, take minimum
-if method in [cv.TM_SQDIFF, cv.TM_SQDIFF_NORMED]:
-    top_left = min_loc
-else:
-    top_left = max_loc
-
 #UPLOAD CONTENT ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-pyautogui.moveTo(top_left[0] + w/2, top_left[1]+ h/2)
-#pyautogui.click()
+move_to_template(Template_Matching_LookUp[2])
 
 #DELETE PICTURE MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 import shutil
