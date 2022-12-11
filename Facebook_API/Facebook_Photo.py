@@ -5,6 +5,10 @@
 # 4) 'D:\Photo masterpieces\Photos\For Reserve'
 # 5) Run "Task Scheduler". To run Task Scheduler? You can open "Task Scheduler Samples" to see the example
 
+photo_dir = 'D:\Photo_masterpieces\Photos\For_Reserve'
+trash_path = 'D:\Photo_masterpieces\Photos\For_Trash'
+web_link = 'https://www.facebook.com/heli.avia.7/'
+
 #IMPORTING LIBS
 from cmath import nan
 import cv2 as cv
@@ -61,14 +65,14 @@ img_path = np.array([])
 count2 = 0
 
 #Get the path/directory
-photo_dir = 'D:\Photo masterpieces\Photos\For Reserve'
+# photo_dir = 'D:\Photo_masterpieces\Photos\For_Reserve'
 #Check if the directory is exist
 if (path.exists(photo_dir)==False):
     print("Check the path. The path or a file does not exist: <<" + photo_dir + ">>")
     time.sleep(3)
     sys.exit()
 
-trash_path = "D:\Photo masterpieces\Photos\For Trash"
+# trash_path = "D:\Photo_masterpieces\Photos\For Trash"
 #Check if the directory is exist
 if (path.exists(trash_path)==False):
     print("Check the path. The path or a file does not exist: <<" + trash_path + ">>")
@@ -80,7 +84,7 @@ for images in glob.iglob(f'{photo_dir}/*'):
 
     # check if the image ends with png/jpg/jpeg/JPG
     if (images.endswith(".png") or images.endswith(".jpg")\
-        or images.endswith(".jpeg") or images.endswith(".JPG")):
+        or images.endswith(".jpeg") or images.endswith(".JPG") or images.endswith(".mp4")):
         count2 += 1
         img_path = np.append(img_path, images)
 
@@ -93,20 +97,21 @@ if (str(img_path)=="[]"):
 use_img_path = img_path[randint(0, count2-1)]
 
 #UPLOAD PICTURE MODULE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-imagename=str(use_img_path)
-image=Image.open(imagename)
-exifdata=image._getexif()
-if exifdata != None:
-    exifdata[42035] = nan #Lens company
-    exifdata[42036] = nan #Lens NAME
-    exifdata[37386] = nan #Focal Lenght
-    exifdata[41989] = nan #Focal Equivalent
-    exifdata[33434] = nan #Ss
-    exifdata[33437] = nan #f-stop
-    exifdata[34855] = nan #ISO
-    exifdata2=image._getexif()
-    for x in exifdata2:
-        exifdata[x] = exifdata2[x]
+
+# imagename=str(use_img_path)
+# image=Image.open(imagename)
+# exifdata=image._getexif()
+# if exifdata != None:
+#     exifdata[42035] = nan #Lens company
+#     exifdata[42036] = nan #Lens NAME
+#     exifdata[37386] = nan #Focal Lenght
+#     exifdata[41989] = nan #Focal Equivalent
+#     exifdata[33434] = nan #Ss
+#     exifdata[33437] = nan #f-stop
+#     exifdata[34855] = nan #ISO
+#     exifdata2=image._getexif()
+#     for x in exifdata2:
+#         exifdata[x] = exifdata2[x]
 
 '''
 print("Shutter speed: ", exifdata[33434]) #Ss
@@ -122,22 +127,23 @@ print("Lens company: ", exifdata[42035]) #Lens company
 print("Lens NAME: ", exifdata[42036]) #Lens NAME
 '''
 
-#Check the exif-data
-if exifdata==None or (exifdata[42035] or exifdata[42036] or exifdata[37386] or \
-    exifdata[41989] or exifdata[33434] or exifdata[33437] or exifdata[34855]) == nan:
-    print("No exifdata")
-    text = " "
-else:
-    text = "\n\n"+ \
-        str(exifdata[42035]) + " " + str(exifdata[42036]) + "\n" + \
-        str(exifdata[37386]) + " mm (" + str(exifdata[41989]) + "mm equivalent)\n" + \
-        "1/"+ str(1/exifdata[33434]) + " sec\n" + \
-        "f/"+ str(exifdata[33437]) + "\n" + \
-        "ISO "+ str(exifdata[34855])
-image.close()
+# #Check the exif-data
+# if exifdata==None or (exifdata[42035] or exifdata[42036] or exifdata[37386] or \
+#     exifdata[41989] or exifdata[33434] or exifdata[33437] or exifdata[34855]) == nan:
+#     print("No exifdata")
+#     text = " "
+# else:
+#     text = "\n\n"+ \
+#         str(exifdata[42035]) + " " + str(exifdata[42036]) + "\n" + \
+#         str(exifdata[37386]) + " mm (" + str(exifdata[41989]) + "mm equivalent)\n" + \
+#         "1/"+ str(1/exifdata[33434]) + " sec\n" + \
+#         "f/"+ str(exifdata[33437]) + "\n" + \
+#         "ISO "+ str(exifdata[34855])
+# image.close()
 
 #Facebook OPEN CV +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-webbrowser.open('https://www.facebook.com/.....')
+#web_link = 'https://www.facebook.com...'
+webbrowser.open(web_link)
 time.sleep(25)
 myScreenshot = pyautogui.screenshot()
 
@@ -170,7 +176,39 @@ else:
 pyautogui.moveTo(top_left[0] + w/2, top_left[1]+ h/2)
 pyautogui.click()
 time.sleep(5)
-pyautogui.moveTo(top_left[0] + w/2, top_left[1]-200)
+
+#WRITE SOMETHING MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+myScreenshot = pyautogui.screenshot()
+
+pathname = os.path.dirname(__file__)     
+myScreenshot.save(os.path.dirname(__file__) + '/Screenshot.png')
+img = cv.imread(os.path.dirname(__file__) + '/Screenshot.png',0)
+img2 = img.copy()
+
+template = cv.imread(os.path.dirname(__file__) + '/WriteSMTH2.png',0)
+w, h = template.shape[::-1]
+# All the 6 methods for comparison in a list
+methods = ['cv.TM_CCOEFF', 'cv.TM_CCOEFF_NORMED', 'cv.TM_CCORR',
+            'cv.TM_CCORR_NORMED', 'cv.TM_SQDIFF', 'cv.TM_SQDIFF_NORMED']
+
+for meth in methods:
+    print("Use method1: " + meth)
+
+img = img2.copy()
+method = eval(meth)
+# Apply template Matching
+res = cv.matchTemplate(img,template,method)
+min_val, max_val, min_loc, max_loc = cv.minMaxLoc(res)
+# If the method is TM_SQDIFF or TM_SQDIFF_NORMED, take minimum
+if method in [cv.TM_SQDIFF, cv.TM_SQDIFF_NORMED]:
+    top_left = min_loc
+else:
+    top_left = max_loc
+
+#Move mouse
+pyautogui.moveTo(top_left[0] + w/2, top_left[1]+ h/2)
+pyautogui.click()
 
 #WRITE KEYBOARD MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -198,38 +236,27 @@ pyautogui.click()
 time.sleep(1)
 type(str(use_proverbs), 0.05)
 time.sleep(1)
-type(text, 0.05)
+# Uncomment the "UPLOAD PICTURE MODULE" first 
+#type(text, 0.05)
 time.sleep(1)
 
 #COPY IMAGE MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+import subprocess, sys
 
-from io import BytesIO
-import win32clipboard
+def send_to_clipboard(path):
+    # path = str("Facebook_API//Grass.mp4")
+    p = subprocess.Popen("powershell.exe -command \"Set-Clipboard -Path {0}\"".format(path), stdout=sys.stdout)
+    p.communicate()
 
-def send_to_clipboard(clip_type, data):
-    win32clipboard.OpenClipboard()
-    win32clipboard.EmptyClipboard()
-    win32clipboard.SetClipboardData(clip_type, data)
-    win32clipboard.CloseClipboard()
-
-filepath = use_img_path
-image = Image.open(filepath)
-
-output = BytesIO()
-image.convert("RGB").save(output, "BMP")
-data = output.getvalue()[14:]
-output.close()
-
-send_to_clipboard(win32clipboard.CF_DIB, data)
-
+send_to_clipboard(use_img_path)
 pyautogui.hotkey('ctrl', 'v')
 
 time.sleep(30)
 
 #Facebook OPEN CV +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 myScreenshot = pyautogui.screenshot()
-myScreenshot.save(os.path.dirname(__file__) + '/Screenshot2.png')
-img = cv.imread(os.path.dirname(__file__) + '/Screenshot2.png',0)
+myScreenshot.save(os.path.dirname(__file__) + '/Screenshot.png')
+img = cv.imread(os.path.dirname(__file__) + '/Screenshot.png',0)
 img2 = img.copy()
 
 
@@ -256,7 +283,7 @@ else:
 #UPLOAD CONTENT ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 pyautogui.moveTo(top_left[0] + w/2, top_left[1]+ h/2)
-pyautogui.click()
+#pyautogui.click()
 
 #DELETE PICTURE MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 import shutil
@@ -271,10 +298,8 @@ else:
     print("File does not exist")
 
 screenshot1 = os.path.dirname(__file__) + '/Screenshot.png'
-screenshot2 = os.path.dirname(__file__) + '/Screenshot2.png'
 if os.path.isfile(screenshot1):
   os.remove(screenshot1)
-  os.remove(screenshot2)
   print("File has been deleted")
 else:
   print("File does not exist")
