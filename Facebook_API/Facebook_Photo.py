@@ -6,13 +6,8 @@
 # 5) Run "Task Scheduler". To run Task Scheduler? You can open "Task Scheduler Samples" to see the example
 
 photo_dir = 'D:\Photo_masterpieces\Photos\For_Reserve'
-<<<<<<< HEAD:Facebook API/Facebook_Photo.py
-trash_path = 'D:\Photo_masterpieces\Photos\For_Reserve'
-web_link = 'https://www.facebook.com/...'
-=======
 trash_path = 'D:\Photo_masterpieces\Photos\For_Trash'
 web_link = 'https://www.facebook.com/.../'
->>>>>>> 1bbde8400e9e4f82233a1575ca56bfa2f7232afa:Facebook_API/Facebook_Photo.py
 Template_Matching_LookUp = ['/1WriteSMTH.png', '/2WriteSMTH2.png', '/3Post.png']
 
 #IMPORTING LIBS
@@ -104,24 +99,6 @@ use_img_path = img_path[randint(0, count2-1)]
 
 
 #UPLOAD PICTURE MODULE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-<<<<<<< HEAD:Facebook API/Facebook_Photo.py
-=======
-
-# imagename=str(use_img_path)
-# image=Image.open(imagename)
-# exifdata=image._getexif()
-# if exifdata != None:
-#     exifdata[42035] = nan #Lens company
-#     exifdata[42036] = nan #Lens NAME
-#     exifdata[37386] = nan #Focal Lenght
-#     exifdata[41989] = nan #Focal Equivalent
-#     exifdata[33434] = nan #Ss
-#     exifdata[33437] = nan #f-stop
-#     exifdata[34855] = nan #ISO
-#     exifdata2=image._getexif()
-#     for x in exifdata2:
-#         exifdata[x] = exifdata2[x]
->>>>>>> 1bbde8400e9e4f82233a1575ca56bfa2f7232afa:Facebook_API/Facebook_Photo.py
 
 text = " "
 if (use_img_path.endswith(".png") or use_img_path.endswith(".jpg")\
@@ -149,7 +126,6 @@ if (use_img_path.endswith(".png") or use_img_path.endswith(".jpg")\
     print("Focal Lenght: ", exifdata[37386]) #Focal Lenght
     print("Focal Equivalent: ", exifdata[41989]) #Focal Equivalent
 
-<<<<<<< HEAD:Facebook API/Facebook_Photo.py
     print("Body company: ", exifdata[271]) #Body company
     print("Body NAME: ", exifdata[272]) #Body NAME
     print("Lens company: ", exifdata[42035]) #Lens company
@@ -176,23 +152,6 @@ if (use_img_path.endswith(".png") or use_img_path.endswith(".jpg")\
     image.close()
 
 #Facebook OPEN CV +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-=======
-# #Check the exif-data
-# if exifdata==None or (exifdata[42035] or exifdata[42036] or exifdata[37386] or \
-#     exifdata[41989] or exifdata[33434] or exifdata[33437] or exifdata[34855]) == nan:
-#     print("No exifdata")
-#     text = " "
-# else:
-#     text = "\n\n"+ \
-#         str(exifdata[42035]) + " " + str(exifdata[42036]) + "\n" + \
-#         str(exifdata[37386]) + " mm (" + str(exifdata[41989]) + "mm equivalent)\n" + \
-#         "1/"+ str(1/exifdata[33434]) + " sec\n" + \
-#         "f/"+ str(exifdata[33437]) + "\n" + \
-#         "ISO "+ str(exifdata[34855])
-# image.close()
-
-#Move to template module +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->>>>>>> 1bbde8400e9e4f82233a1575ca56bfa2f7232afa:Facebook_API/Facebook_Photo.py
 
 def move_to_template(FromScreenshot):
     myScreenshot = pyautogui.screenshot()
@@ -201,7 +160,6 @@ def move_to_template(FromScreenshot):
     myScreenshot.save(os.path.dirname(__file__) + '/Screenshot.png')
     img = cv.imread(os.path.dirname(__file__) + '/Screenshot.png',0)
     img2 = img.copy()
-<<<<<<< HEAD:Facebook API/Facebook_Photo.py
     template = cv.imread(os.path.dirname(__file__) + FromScreenshot,0)
 
     if (path.exists(os.path.dirname(__file__) + FromScreenshot)==False):
@@ -209,10 +167,6 @@ def move_to_template(FromScreenshot):
         time.sleep(3)
         sys.exit()
 
-=======
-
-    template = cv.imread(os.path.dirname(__file__) + FromScreenshot,0)
->>>>>>> 1bbde8400e9e4f82233a1575ca56bfa2f7232afa:Facebook_API/Facebook_Photo.py
     w, h = template.shape[::-1]
     # All the 6 methods for comparison in a list
     methods = ['cv.TM_CCOEFF', 'cv.TM_CCOEFF_NORMED', 'cv.TM_CCORR',
@@ -239,15 +193,9 @@ def move_to_template(FromScreenshot):
 #Facebook OPEN CV +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #web_link = 'https://www.facebook.com/.../'
 webbrowser.open(web_link)
-<<<<<<< HEAD:Facebook API/Facebook_Photo.py
-time.sleep(5)
-move_to_template(Template_Matching_LookUp[0])
-time.sleep(5)
-=======
 time.sleep(25)
 move_to_template(Template_Matching_LookUp[0])
 time.sleep(5)
->>>>>>> 1bbde8400e9e4f82233a1575ca56bfa2f7232afa:Facebook_API/Facebook_Photo.py
 move_to_template(Template_Matching_LookUp[1])
 
 #WRITE KEYBOARD MODULE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -277,11 +225,7 @@ time.sleep(1)
 type(str(use_proverbs), 0.05)
 time.sleep(1)
 # Uncomment the "UPLOAD PICTURE MODULE" first 
-<<<<<<< HEAD:Facebook API/Facebook_Photo.py
 type(text, 0.05)
-=======
-#type(text, 0.05)
->>>>>>> 1bbde8400e9e4f82233a1575ca56bfa2f7232afa:Facebook_API/Facebook_Photo.py
 time.sleep(1)
 
 #COPY IMAGE MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -321,13 +265,3 @@ if os.path.isfile(file_path):
     print("File has been moved to <<Trash>>")
 else:
     print("File does not exist")
-<<<<<<< HEAD:Facebook API/Facebook_Photo.py
-=======
-
-screenshot1 = os.path.dirname(__file__) + '/Screenshot.png'
-if os.path.isfile(screenshot1):
-  os.remove(screenshot1)
-  print("File has been deleted")
-else:
-  print("File does not exist")
->>>>>>> 1bbde8400e9e4f82233a1575ca56bfa2f7232afa:Facebook_API/Facebook_Photo.py
