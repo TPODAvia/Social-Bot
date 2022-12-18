@@ -80,7 +80,7 @@ img_path = np.array([])
 count2 = 0
 
 # get the path/directory
-photo_dir = 'D:/Photo masterpieces/Photos/For Uploads'
+photo_dir = 'D:/Photo_masterpieces/Photos/For_Uploads'
 
 #Check if the directory is exist
 if (path.exists(photo_dir)==False):
@@ -174,7 +174,7 @@ vk.wall.post(owner_id=my_id, v=5.95,  message=text, attachments = saved_photo)
 import shutil
 
 file_path = str(use_img_path)
-trash_path = "D:\Photo masterpieces\Photos\For Reserve"
+trash_path = "D:\Photo_masterpieces\Photos\For_Reserve"
 
 #Check if the directory is exist
 if (path.exists(trash_path)==False):
