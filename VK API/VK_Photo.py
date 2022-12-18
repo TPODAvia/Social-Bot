@@ -128,8 +128,8 @@ print("Shutter speed: ", exifdata[33434]) #Ss
 print("F-stop: ", exifdata[33437]) #f-stop
 print("ISO: ", exifdata[34855]) #ISO
 
-print("ISO: ", exifdata[37386]) #Focal Lenght
-print("ISO: ", exifdata[41989]) #Focal Equivalent
+print("Focal Lenght: ", exifdata[37386]) #Focal Lenght
+print("Focal Equivalent: ", exifdata[41989]) #Focal Equivalent
 
 print("Body company: ", exifdata[271]) #Body company
 print("Body NAME: ", exifdata[272]) #Body NAME
@@ -137,9 +137,14 @@ print("Lens company: ", exifdata[42035]) #Lens company
 print("Lens NAME: ", exifdata[42036]) #Lens NAME
 '''
 
+#Set customs data
+if str(exifdata[272]) == "FinePix S2950":
+    exifdata[41989] = 5.6*exifdata[37386]
+    exifdata[42035] = exifdata[271]
+    exifdata[42036] = "5-90mm F/ 3.1-5.6"
 #Check the exif-data
-if exifdata==None or (exifdata[42035] or exifdata[42036] or exifdata[37386] or \
-    exifdata[41989] or exifdata[33434] or exifdata[33437] or exifdata[34855]) == nan:
+if exifdata==None or (str(exifdata[42035]) or str(exifdata[42036]) or str(exifdata[37386]) or \
+    str(exifdata[41989]) or str(exifdata[33434]) or str(exifdata[33437]) or str(exifdata[34855])) == "nan":
     print("No exifdata")
     text = str(use_proverbs)
 else:
@@ -147,7 +152,7 @@ else:
     text = str(use_proverbs) + "\n\n"+ \
         str(exifdata[42035]) + " " + str(exifdata[42036]) + "\n" + \
         str(exifdata[37386]) + " mm (" + str(exifdata[41989]) + "mm equivalent)\n" + \
-        "1/"+ str(1/exifdata[33434]) + " sec\n" + \
+        "1/"+ str(float('{:.3f}'.format(10/exifdata[33434]*0.1))) + " sec\n" + \
         "ƒ/"+ str(exifdata[33437]) + "\n" + \
         "ISO "+ str(exifdata[34855])
 
